@@ -2,7 +2,7 @@
   "name": "cicd-demo",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://chedi-khlifi.github.io/cicd-demo",
+  "homepage": "https://chedi-khlifi.github.io/test",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -10,20 +10,29 @@
     "lint": "eslint src/"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "^6.1.0",
+    "@testing-library/react": "^14.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/jest-dom": "^6.1.0"
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
+    "@csstools/normalize.css": "^12.1.1",
     "eslint": "^8.0.0"
   },
   "eslintConfig": {
-    "extends": ["react-app"]
+    "extends": [
+      "react-app"
+    ]
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
-    "development": ["last 1 chrome version"]
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version"
+    ]
   }
 }
