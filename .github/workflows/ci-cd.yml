@@ -1,0 +1,90 @@
+name: CI/CD Pipeline
+
+# Runs the pipeline on every push or pull request targeting main
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+
+  # ──────────────────────────────────────────────
+  # JOB 1 — Install, lint, and test the application
+  # ──────────────────────────────────────────────
+  test:
+    name: 🧪 Test & Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run test suite
+        run: npm test
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### 🧪 Test & Lint job finished" >> $GITHUB_STEP_SUMMARY
+          echo "- Dependencies installed with \`npm ci\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Code linted with ESLint" >> $GITHUB_STEP_SUMMARY
+          echo "- Test suite executed with React Testing Library" >> $GITHUB_STEP_SUMMARY
+
+  # ──────────────────────────────────────────────
+  # JOB 2 — Build the production bundle and deploy
+  #          it to GitHub Pages (runs only on main,
+  #          and only if the test job succeeded)
+  # ──────────────────────────────────────────────
+  build-and-deploy:
+    name: 🚀 Build & Deploy
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+        env:
+          CI: false
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          publish_branch: gh-pages
+          commit_message: "deploy: ${{ github.sha }}"
+
+      - name: Summary
+        run: |
+          echo "### 🚀 Deployed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Live URL: https://chedi-khlifi.github.io/cicd-demo" >> $GITHUB_STEP_SUMMARY
