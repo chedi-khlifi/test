@@ -87,4 +87,4 @@ jobs:
         run: |
           echo "### 🚀 Deployed successfully" >> $GITHUB_STEP_SUMMARY
           echo "- Commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- Live URL: https://chedi-khlifi.github.io/cicd-demo" >> $GITHUB_STEP_SUMMARY
+          echo "- Live URL: https://chedi-khlifi.github.io/test" >> $GITHUB_STEP_SUMMARY
