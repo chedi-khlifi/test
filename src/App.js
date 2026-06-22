@@ -39,7 +39,7 @@ function App() {
     <div className="app">
       <header className="header">
         <h1>Task Manager</h1>
-        <p className="subtitle">A small React app, deployed by a real CI/CD pipeline</p>
+        <p className="subtitle">ya manel ya mezeyna</p>
       </header>
 
       <form className="add-form" onSubmit={addTask}>
