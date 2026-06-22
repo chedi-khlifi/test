@@ -39,7 +39,7 @@ function App() {
     <div className="app">
       <header className="header">
         <h1>Task Manager</h1>
-        <p className="subtitle">demo</p>
+        <p className="subtitle">test 1</p>
       </header>
 
       <form className="add-form" onSubmit={addTask}>
